@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
+using MyTwitterApp.Helpers;
 using MyTwitterApp.Models;
 using Newtonsoft.Json;
 
@@ -39,26 +40,40 @@ namespace MyTwitterApp.Repository
             //return await _client.GetAsync(url);
         }
 
-        public async Task<RootObject> GetTweetsAsync(string accessToken)
+        public async Task<List<RootObject>> GetTweetsAsync(string accessToken, string url)
         {
-            var requestUserTimeline = new HttpRequestMessage(HttpMethod.Get, "https://api.twitter.com/1.1/statuses/user_timeline.json?count=3&screen_name=salesforce");
+            //var settings = new JsonSerializerSettings
+            //{
+            //    ContractResolver = new DynamicMappingResolver(map)
+            //};
+            var requestUserTimeline = new HttpRequestMessage(HttpMethod.Get, url);
             requestUserTimeline.Headers.Add("Authorization", "Bearer " + accessToken);
             //var httpClient = new HttpClient();
             //HttpResponseMessage responseUserTimeLine = await httpClient.SendAsync(requestUserTimeline).ConfigureAwait(false);
             HttpResponseMessage responseUserTimeLine = await _client.SendAsync(requestUserTimeline).ConfigureAwait(false);
-            //var serializer = new JavaScriptSerializer();
-            //dynamic json = serializer.Deserialize<object>(await responseUserTimeLine.Content.ReadAsStringAsync());
-            //var enumerableTwitts = (json as IEnumerable<dynamic>);
             List<RootObject> ourlisting = JsonConvert.DeserializeObject<List<RootObject>>(await responseUserTimeLine.Content.ReadAsStringAsync());
-            //var tweet = enumerableTwitts[0];
+            //List<RootObject> ourlisting = JsonConvert.DeserializeObject<List<RootObject>>(await responseUserTimeLine.Content.ReadAsStringAsync(),settings);
 
-
-            //if (enumerableTwitts == null)
-            //{
-            //    return null;
-            //}
-            //return enumerableTwitts.Select(t => (string)(t["text"].ToString()));
-            return ourlisting[2];
+            return ourlisting;
         }
+
+        //private Dictionary<Type, Dictionary<string, string>> map = new Dictionary<Type, Dictionary<string, string>>
+        //{
+        //    {
+        //        typeof(UserMention),
+        //        new Dictionary<string, string>
+        //        {
+        //            {"ScreenName", "screen_name"}
+        //        }
+        //    },
+        //    {
+        //        typeof(Entities),
+        //        new Dictionary<string, string>
+        //        {
+        //            {"UserMentions", "user_mentions"}
+        //        }
+        //    }
+
+        //};
     }
 }

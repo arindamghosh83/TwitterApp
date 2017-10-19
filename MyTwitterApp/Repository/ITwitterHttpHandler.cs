@@ -12,6 +12,6 @@ namespace MyTwitterApp.Repository
     {
  
         Task<string> GetAccessTokenAsync(string url);
-        Task<RootObject> GetTweetsAsync(string accessToken);
+        Task<List<RootObject>> GetTweetsAsync(string accessToken, string url);
     }
 }

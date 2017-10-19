@@ -41,15 +41,15 @@ namespace MyTwitterApp.UnitTests
         [Test]
         public void then_should_return_tweet_when_get_tweet_repo_invoked()
         {
-            RootObject expectedtweet = new RootObject { text = "Mock Object to Test" };
-            fakeHttpHandler.Setup(x => x.GetTweetsAsync(It.IsAny<string>())).ReturnsAsync(expectedtweet);
+            List<RootObject> expectedtweets = new List<RootObject> {new RootObject() { text = "Mock Object to Test1" },new RootObject(){ text = "Mock Object to Test2" }};
+            fakeHttpHandler.Setup(x => x.GetTweetsAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(expectedtweets);
             string expectedToken = "Dummy Token";
             fakeHttpHandler.Setup(x => x.GetAccessTokenAsync(It.IsAny<string>())).ReturnsAsync(expectedToken);
 
 
-            var actualtweet = sut.GetTwitts().Result;
+            var actualtweets = sut.GetTwitts().Result;
             fakeHttpHandler.Verify(x => x.GetAccessTokenAsync("https://api.twitter.com/oauth2/token"), Times.Once);
-            Assert.That(actualtweet.text, Is.EqualTo(expectedtweet.text));
+            Assert.That(actualtweets.Count, Is.EqualTo(expectedtweets.Count));
         }
     }
 }

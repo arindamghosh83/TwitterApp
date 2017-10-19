@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MyTwitterApp.Models;
 
 namespace MyTwitterApp.Repository
@@ -6,6 +7,6 @@ namespace MyTwitterApp.Repository
     public interface ITwitterRepo
     {
         Task<string> GetAccessToken();
-        Task<RootObject> GetTwitts();
+        Task<List<RootObject>> GetTwitts();
     }
 }

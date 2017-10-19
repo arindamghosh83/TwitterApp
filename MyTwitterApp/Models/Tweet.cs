@@ -73,7 +73,8 @@ namespace MyTwitterApp.Models
     {
         public List<Hashtag> hashtags { get; set; }
         public List<object> symbols { get; set; }
-        public List<object> user_mentions { get; set; }
+        public List<User_Mention> user_mentions { get; set; }
+        //public List<UserMention> UserMentions { get; set; }
         public List<Url> urls { get; set; }
         public List<Medium> media { get; set; }
     }
@@ -206,4 +207,17 @@ namespace MyTwitterApp.Models
         public bool possibly_sensitive { get; set; }
         public string lang { get; set; }
     }
+
+    public class User_Mention
+    //public class UserMention
+    {
+        public string name { get; set; }
+        public string screen_name { get; set; }
+        //public string ScreenName { get; set; }
+
+        public int[] indices { get; set; }
+
+    }
+
+
 }

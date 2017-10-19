@@ -2,15 +2,15 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
+@*<div class="jumbotron">
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
     <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+</div>*@
 
 
-<div ng-app="myApp" ng-controller="TwitterController">
-    <div class="panel panel-default" class="ng-cloak">
+<div ng-app="myApp" ng-controller="TwitterController" id="tweetcontainer" class="container">
+    <div class="panel panel-default" class="ng-cloak" ng-repeat="tweet in tweets">
         <div class="panel-heading">
             <div class='row'>
                 <div class="col-md-2">
@@ -25,13 +25,11 @@
             <div class="row">
                 <div class="col-md-2">{{tweet.created_at | date : "MMM d, y h:mm:ss a"}}</div>
                 <div class="col-md-10">
-                    @*<div ng-show="tweet.entities.urls.length > 0">
-                            <span></span>
-                            <span ng-repeat="url in tweet.entities.urls"></span>
-                        </div>*@
-                    <span>{{tweet.text}}</span>
-                    <a ng-repeat="hashtag in tweet.hashtagstrarr" target="_blank" ng-href="{{hashtag.link}}">{{hashtag.text}}</a>
-                    <a ng-repeat="url in tweet.urlrstrarr" target="_blank" ng-href="{{url}}">{{url}}</a>
+                    <p id="tweet_text_{{$index}}">
+                        <span>{{tweet.text}}</span>
+                        <a ng-repeat="hashtag in tweet.hashtagstrarr" target="_blank" ng-href="{{hashtag.link}}">{{hashtag.text}}</a>
+                        <a ng-repeat="url in tweet.urlrstrarr" target="_blank" ng-href="{{url}}">{{url}}</a>
+                    </p>
                 </div>
             </div>
            
@@ -40,11 +38,11 @@
         <div class="panel-body">
             <div class="col-md-10 col-md-offset-2">
                 <div class="panel-title">
-                    <div ng-show="tweet.extended_entities">
-                        <span>Arindam</span>
-                        {{tweet.extended_entities.media[0].type}}
-                        {{tweet.extended_entities.media[0].media_url}}
-                        <img ng-show="tweet.extended_entities.media.length > 0 && tweet.extended_entities.media[0].type == 'photo'" ng-src="{{tweet.extended_entities.media[0].media_url}}"/>
+                    <div ng-show="tweet.media">
+                        <img  ng-src="{{tweet.media.media_url}}" class="img-responsive"/>
+                    </div>
+                    <div ng-show="tweet.description.length && !tweet.media">
+                        {{tweet.description}}
                     </div>
                 </div>
             </div>
