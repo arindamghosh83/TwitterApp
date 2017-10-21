@@ -10,6 +10,7 @@ using System.Web.Script.Serialization;
 using MyTwitterApp.Helpers;
 using MyTwitterApp.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace MyTwitterApp.Repository
 {
@@ -42,10 +43,12 @@ namespace MyTwitterApp.Repository
 
         public async Task<List<RootObject>> GetTweetsAsync(string accessToken, string url)
         {
-            //var settings = new JsonSerializerSettings
-            //{
-            //    ContractResolver = new DynamicMappingResolver(map)
-            //};
+            var settings = new JsonSerializerSettings
+            {
+               // ContractResolver = new DynamicMappingResolver(map)
+                //ContractResolver = new CamelCasePropertyNamesContractResolver()
+                
+            };
             var requestUserTimeline = new HttpRequestMessage(HttpMethod.Get, url);
             requestUserTimeline.Headers.Add("Authorization", "Bearer " + accessToken);
             //var httpClient = new HttpClient();

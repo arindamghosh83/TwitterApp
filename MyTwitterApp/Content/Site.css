@@ -26,3 +26,7 @@ textarea {
 .ng-cloak {
 	display: none;
 }
+
+#tweetcontainer {
+	margin-top: 50px;
+}

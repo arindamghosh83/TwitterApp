@@ -15,7 +15,7 @@
             <div class='row'>
                 <div class="col-md-2">
                     @*<img class="img-responsive" src="{{tweet.user.profile_image_url}}"/>*@
-                    <img class="img-responsive" src="{{tweet.profile_image_url}}" />
+                    <img class="img-responsive" src="{{tweet.profile_image_url}}"/>
                 </div>
                 <div class="col-md-10">
                     @*<h3 class="panel-title">{{tweet.user.screen_name}}</h3>*@
@@ -32,14 +32,14 @@
                     </p>
                 </div>
             </div>
-           
+
             @*<h3 class="panel-title">{{fname}}</h3>*@
         </div>
         <div class="panel-body">
             <div class="col-md-10 col-md-offset-2">
                 <div class="panel-title">
                     <div ng-show="tweet.media">
-                        <img  ng-src="{{tweet.media.media_url}}" class="img-responsive"/>
+                        <img ng-src="{{tweet.media.media_url}}" class="img-responsive"/>
                     </div>
                     <div ng-show="tweet.description.length && !tweet.media">
                         {{tweet.description}}
@@ -49,3 +49,4 @@
         </div>
     </div>
 </div>
+

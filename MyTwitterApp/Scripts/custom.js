@@ -7,30 +7,31 @@ var TwitterController = function ($scope,$timeout,$interval, twitterFactory) {
     $scope.fname = 'Arindam';
     $scope.lname = 'Ghosh';
     
-    $scope.textTransformed = false;
-    function init() {
-        twitterFactory.getTwitterFeed()
-            .success(function (data) {
-                $scope.tweets = [];
-               
-                data.Result.forEach(function (data, index) {
-                    
-                    var transformedobj = transformData(data);
-                    $scope.tweets.push(transformedobj);
-                });
-                $timeout(transformTweetUserMentionedText, 100);
-                console.log("Init called");
-                console.log("Tweet count", $scope.tweets.length);
-         
-            })
-            .error(function(data, status, headers, config) {
+    //$scope.textTransformed = false;
+    $scope.initData = function() {
+    twitterFactory.getTwitterFeed()
+        .then(function (obj) {
+            var data = obj.data;
+            $scope.tweets = [];
+            data.Result.forEach(function (data, index) {
 
+                var transformedobj = $scope.transformData(data);
+                $scope.tweets.push(transformedobj);         
             });
+             $timeout($scope.transformTweetUserMentionedText, 100);
+             //console.log("Init called");
+             //console.log("Tweet count", $scope.tweets.length);
+
+        });
+            //.error(function(data, status, headers, config) {
+
+            //});
+        
     }
 
-    init();
-    $interval(init, 60 * 1000);
-    function transformTweetUserMentionedText() {
+    $scope.initData();
+    //$interval(init, 60 * 1000);
+    $scope.transformTweetUserMentionedText =function() {
         $scope.textTransformed = true;
         var subobj;
         $('p[id^="tweet_text"] span').each(function(index, el) {
@@ -126,7 +127,7 @@ var TwitterController = function ($scope,$timeout,$interval, twitterFactory) {
         
     }
 
-    function transformData(tweet) {
+    $scope.transformData = function(tweet) {
         var obj = {};
         var urlRegex = /(http(s?):\/\/[^ ]*)/gi;
         obj.created_at = new Date(tweet.created_at);
@@ -182,8 +183,9 @@ var TwitterController = function ($scope,$timeout,$interval, twitterFactory) {
             //obj.hashtagstrarr = hashtagstrarr;
             //obj.urlrstrarr = urlrstrarr;
             //console.log(obj);
-            return obj;
-        }
+           // return obj;
+       }
+       return obj;
     }
 }
 
@@ -192,12 +194,18 @@ app.controller('TwitterController', TwitterController);
 
 var TwitterFactory = function($http) {
     var factory = {};
-    factory.getTwitterFeed = function() {
+    factory.getTwitterFeed = function () {
+        //var deferred = $q.defer();
         return $http.get("/Home/GetTwitterFeed");
+        //$http.get("/Home/GetTwitterFeed").success(function(data) {
+        //    deferred.resolve(data);
+        //});
+        //return deferred.promise;
     }
+  
 
     return factory;
 }
 
-TwitterFactory.$inject = ['$http'];
+TwitterFactory.$inject = ['$http','$q'];
 app.factory('twitterFactory', TwitterFactory);
