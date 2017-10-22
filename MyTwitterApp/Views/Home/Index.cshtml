@@ -2,15 +2,11 @@
     ViewBag.Title = "Home Page";
 }
 
-@*<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>*@
-
-
 <div ng-app="myApp" ng-controller="TwitterController" id="tweetcontainer" class="container">
-    <div class="panel panel-default" class="ng-cloak" ng-repeat="tweet in tweets">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search Text" ng-model="searchText" ng-keyup="keyUpTextSearch()">
+    </div>
+    <div class="panel panel-default" class="ng-cloak" ng-repeat="tweet in tweets" ng-show="tweet.isVisible">
         <div class="panel-heading">
             <div class='row'>
                 <div class="col-md-2">
@@ -18,8 +14,7 @@
                     <img class="img-responsive" src="{{tweet.profile_image_url}}"/>
                 </div>
                 <div class="col-md-10">
-                    @*<h3 class="panel-title">{{tweet.user.screen_name}}</h3>*@
-                    <h3 class="panel-title">{{tweet.screen_name}}</h3>
+                   <a class="panel-title" ng-href="{{tweet.user.url}}">@@{{tweet.user.screen_name}}</a>
                 </div>
             </div>
             <div class="row">
@@ -27,16 +22,17 @@
                 <div class="col-md-10">
                     <p id="tweet_text_{{$index}}">
                         <span>{{tweet.text}}</span>
-                        <a ng-repeat="hashtag in tweet.hashtagstrarr" target="_blank" ng-href="{{hashtag.link}}">{{hashtag.text}}</a>
-                        <a ng-repeat="url in tweet.urlrstrarr" target="_blank" ng-href="{{url}}">{{url}}</a>
+                     
                     </p>
                 </div>
             </div>
 
-            @*<h3 class="panel-title">{{fname}}</h3>*@
+            
         </div>
         <div class="panel-body">
-            <div class="col-md-10 col-md-offset-2">
+            <div class="col-md-2">
+                <div ng-show="tweet.retweet_count"><i class="fa fa-retweet"></i> {{tweet.retweet_count}} times</div></div>
+            <div class="col-md-10">
                 <div class="panel-title">
                     <div ng-show="tweet.media">
                         <img ng-src="{{tweet.media.media_url}}" class="img-responsive"/>

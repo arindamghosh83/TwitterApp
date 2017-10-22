@@ -19,41 +19,6 @@ namespace MyTwitterApp.Models
         public List<int> indices { get; set; }
     }
 
-    public class Medium2
-    {
-        public int w { get; set; }
-        public int h { get; set; }
-        public string resize { get; set; }
-    }
-
-    public class Thumb
-    {
-        public int w { get; set; }
-        public int h { get; set; }
-        public string resize { get; set; }
-    }
-
-    public class Large
-    {
-        public int w { get; set; }
-        public int h { get; set; }
-        public string resize { get; set; }
-    }
-
-    public class Small
-    {
-        public int w { get; set; }
-        public int h { get; set; }
-        public string resize { get; set; }
-    }
-
-    //public class Sizes
-    //{
-    //    public Medium2 medium { get; set; }
-    //    public Thumb thumb { get; set; }
-    //    public Large large { get; set; }
-    //    public Small small { get; set; }
-    //}
 
     public class Medium
     {
@@ -66,7 +31,7 @@ namespace MyTwitterApp.Models
         public string display_url { get; set; }
         public string expanded_url { get; set; }
         public string type { get; set; }
-        //public Sizes sizes { get; set; }
+  
     }
 
     public class Entities
@@ -74,46 +39,12 @@ namespace MyTwitterApp.Models
         public List<Hashtag> hashtags { get; set; }
         public List<object> symbols { get; set; }
         public List<User_Mention> user_mentions { get; set; }
-        //public List<UserMention> UserMentions { get; set; }
+      
         public List<Url> urls { get; set; }
         public List<Medium> media { get; set; }
     }
 
-    //public class Medium4
-    //{
-    //    public int w { get; set; }
-    //    public int h { get; set; }
-    //    public string resize { get; set; }
-    //}
 
-    //public class Thumb2
-    //{
-    //    public int w { get; set; }
-    //    public int h { get; set; }
-    //    public string resize { get; set; }
-    //}
-
-    //public class Large2
-    //{
-    //    public int w { get; set; }
-    //    public int h { get; set; }
-    //    public string resize { get; set; }
-    //}
-
-    //public class Small2
-    //{
-    //    public int w { get; set; }
-    //    public int h { get; set; }
-    //    public string resize { get; set; }
-    //}
-
-    //public class Sizes2
-    //{
-    //    public Medium4 medium { get; set; }
-    //    public Thumb2 thumb { get; set; }
-    //    public Large2 large { get; set; }
-    //    public Small2 small { get; set; }
-    //}
 
     public class Medium3
     {
@@ -137,12 +68,12 @@ namespace MyTwitterApp.Models
         public string screen_name { get; set; }
         public string location { get; set; }
         public string description { get; set; }
-        
+        public string url { get; set; }
+
         public string created_at { get; set; }
 
         public string profile_image_url { get; set; }
-        public string profile_image_url_https { get; set; }
-        public string profile_banner_url { get; set; }
+
 
 
 
@@ -166,13 +97,15 @@ namespace MyTwitterApp.Models
     }
 
     public class User_Mention
-    //public class UserMention
+   
     {
-        public string name { get; set; }
+      
+        
         public string screen_name { get; set; }
-        //public string ScreenName { get; set; }
+       
 
         public int[] indices { get; set; }
+       
 
     }
 

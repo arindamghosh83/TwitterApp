@@ -8,13 +8,14 @@ using Newtonsoft.Json;
 
 namespace MyTwitterApp.Helpers
 {
-    public class DynamicMappingResolver : DefaultContractResolver
+    public class DynamicMappingResolver : CamelCasePropertyNamesContractResolver
     {
         private Dictionary<Type, Dictionary<string, string>> memberNameToJsonNameMap;
 
-        public DynamicMappingResolver(Dictionary<Type, Dictionary<string, string>> memberNameToJsonNameMap)
+        public DynamicMappingResolver(Dictionary<Type, Dictionary<string, string>> memberNameToJsonNameMap) : base()
         {
             this.memberNameToJsonNameMap = memberNameToJsonNameMap;
+            
         }
 
 
@@ -27,8 +28,12 @@ namespace MyTwitterApp.Helpers
                 dict.TryGetValue(member.Name, out jsonName))
             {
                 prop.PropertyName = jsonName;
+                
             }
             return prop;
+            
         }
+
+       
     }
 }
