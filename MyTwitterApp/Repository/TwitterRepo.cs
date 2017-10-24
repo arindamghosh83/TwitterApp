@@ -32,7 +32,7 @@ namespace MyTwitterApp.Repository
             var requestUserTimeline = new HttpRequestMessage(HttpMethod.Get, url);
             requestUserTimeline.Headers.Add("Authorization", "Bearer " + accessToken);
             var httpClient = new HttpClient();
-            //HttpResponseMessage responseUserTimeLine = await httpClient.SendAsync(requestUserTimeline).ConfigureAwait(false);
+            
             var tweets = await this._handler.GetTweetsAsync(accessToken,url).ConfigureAwait(false);
             return tweets;
         }

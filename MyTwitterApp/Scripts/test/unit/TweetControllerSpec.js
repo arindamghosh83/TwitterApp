@@ -3,7 +3,8 @@
         var $controller,scope,twitterFactory,timeout,interval,$q,$rootScope,
             dummyModels = {
                 data: {
-                    Result: ['Dummy Tweet #1', 'Dummy Tweet #2']
+                    //Result: ['Dummy Tweet #1', 'Dummy Tweet #2']
+                    result: ['Dummy Tweet #1', 'Dummy Tweet #2']
                 }
             };
 

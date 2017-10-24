@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MyTwitterApp.Models;
 using MyTwitterApp.Repository;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace MyTwitterApp.Controllers
 {
@@ -37,11 +40,19 @@ namespace MyTwitterApp.Controllers
 
         public ActionResult GetTwitterFeed()
         {
-            //TwitterRepo repo = new TwitterRepo();
-            var access_token = _repo.GetTwitts();
-            //var access_token = _repo.GetAccessToken();
-            return Json(access_token, JsonRequestBehavior.AllowGet);
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+
+            };
             
+            var access_token = _repo.GetTwitts();
+            
+            var twitterfeed =JsonConvert.SerializeObject(access_token,settings);
+            
+            return Content(twitterfeed, "application/json");
+
+
         }
     }
 }

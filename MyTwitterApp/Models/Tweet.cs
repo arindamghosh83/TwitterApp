@@ -2,46 +2,62 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace MyTwitterApp.Models
 {
     public class Hashtag
     {
-        public string text { get; set; }
-        public List<int> indices { get; set; }
+       
+        public string Text { get; set; }
+      
+        public List<int> Indices { get; set; }
     }
 
     public class Url
     {
+       
         public string url { get; set; }
         public string expanded_url { get; set; }
         public string display_url { get; set; }
-        public List<int> indices { get; set; }
+        public List<int> Indices { get; set; }
+        
     }
 
 
     public class Medium
     {
         public long id { get; set; }
-        public string id_str { get; set; }
-        public List<int> indices { get; set; }
-        public string media_url { get; set; }
-        public string media_url_https { get; set; }
-        public string url { get; set; }
-        public string display_url { get; set; }
-        public string expanded_url { get; set; }
-        public string type { get; set; }
-  
+        
+        public List<int> Indices { get; set; }
+       
+        [JsonProperty("media_url")]
+        public string MediaUrl { get; set; }
+        
+        [JsonProperty("media_url_https")]
+        public string MediaUrlHttps { get; set; }
+        
+        public string Url { get; set; }
+        
+        public string Type { get; set; }
+
     }
 
     public class Entities
     {
-        public List<Hashtag> hashtags { get; set; }
-        public List<object> symbols { get; set; }
-        public List<User_Mention> user_mentions { get; set; }
-      
-        public List<Url> urls { get; set; }
-        public List<Medium> media { get; set; }
+        
+        public List<Hashtag> Hashtags { get; set; }
+       
+        public List<object> Symbols { get; set; }
+        
+        [JsonProperty("user_mentions")]
+        public List<UserMention> UserMentions { get; set; }
+
+       
+        public List<Url> Urls { get; set; }
+       
+        public List<Medium> Media { get; set; }
     }
 
 
@@ -49,10 +65,13 @@ namespace MyTwitterApp.Models
     public class Medium3
     {
 
-        public string media_url { get; set; }
-   
-        public string type { get; set; }
-  
+        
+        [JsonProperty("media_url")]
+        public string MediaUrl { get; set; }
+
+        
+        public string Type { get; set; }
+
     }
 
     public class ExtendedEntities
@@ -64,15 +83,21 @@ namespace MyTwitterApp.Models
     {
        
         
-        public string name { get; set; }
-        public string screen_name { get; set; }
-        public string location { get; set; }
-        public string description { get; set; }
-        public string url { get; set; }
+       
+        public string Name { get; set; }
+        
+        [JsonProperty("screen_name")]
+        public string ScreenName { get; set; }
+        
+        public string Location { get; set; }
+       
+        public string Description { get; set; }
+        
+        public string Url { get; set; }
 
-        public string created_at { get; set; }
-
-        public string profile_image_url { get; set; }
+        
+        [JsonProperty("profile_image_url")]
+        public string ProfileImageUrl { get; set; }
 
 
 
@@ -81,30 +106,38 @@ namespace MyTwitterApp.Models
 
     public class RootObject
     {
-        public string created_at { get; set; }
-        public long id { get; set; }
-        public string id_str { get; set; }
-        public string text { get; set; }
-    
-        public Entities entities { get; set; }
-        public ExtendedEntities extended_entities { get; set; }
-        public string source { get; set; }
+        
+        [JsonProperty("created_at")]
+        public string CreatedAt { get; set; }
+        
+        public long Id { get; set; }
+        
+        public string Text { get; set; }
 
-        public User user { get; set; }
+        public Entities Entities { get; set; }
+        
+        [JsonProperty("extended_entities")]
+        public ExtendedEntities ExtendedEntities { get; set; }
 
-        public int retweet_count { get; set; }
+
+      public User User { get; set; }
+
+        
+        [JsonProperty("retweet_count")]
+        public int RetweetCount { get; set; }
 
     }
 
-    public class User_Mention
-   
-    {
-      
-        
-        public string screen_name { get; set; }
-       
+  
+    public class UserMention
 
-        public int[] indices { get; set; }
+    {
+        [JsonProperty("screen_name")]
+        public string ScreenName { get; set; }
+        
+
+        public int[] Indices { get; set; }
+        
        
 
     }

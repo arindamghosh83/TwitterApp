@@ -7,13 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
-using MyTwitterApp.Helpers;
 using MyTwitterApp.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace MyTwitterApp.Repository
 {
+    /// <summary>
+    /// Implementation to retreive data from Twitter API
+    /// </summary>
     public class TwitterHttpHandler : ITwitterHttpHandler
     {
         private HttpClient _client = new HttpClient();
@@ -36,43 +38,21 @@ namespace MyTwitterApp.Repository
             dynamic item = serializer.Deserialize<object>(json);
             var accessToken = item["access_token"];
             return item["access_token"];
-            //return await _client.GetAsync(url);
+           
         }
 
         public async Task<List<RootObject>> GetTweetsAsync(string accessToken, string url)
         {
-            var settings = new JsonSerializerSettings
-            {
-                //ContractResolver = new DynamicMappingResolver(map)
-               //ContractResolver = new CamelCasePropertyNamesContractResolver()
-                
-            };
+       
             var requestUserTimeline = new HttpRequestMessage(HttpMethod.Get, url);
             requestUserTimeline.Headers.Add("Authorization", "Bearer " + accessToken);
             HttpResponseMessage responseUserTimeLine = await _client.SendAsync(requestUserTimeline).ConfigureAwait(false);
             List<RootObject> ourlisting = JsonConvert.DeserializeObject<List<RootObject>>(await responseUserTimeLine.Content.ReadAsStringAsync());
-            //List<RootObject> ourlisting = JsonConvert.DeserializeObject<List<RootObject>>(await responseUserTimeLine.Content.ReadAsStringAsync(),settings);
+            
 
             return ourlisting;
         }
 
-        //private Dictionary<Type, Dictionary<string, string>> map = new Dictionary<Type, Dictionary<string, string>>
-        //{
-        //    {
-        //        typeof(UserMention),
-        //        new Dictionary<string, string>
-        //        {
-        //            {"ScreenName", "screen_name"}
-        //        }
-        //    },
-        //    {
-        //        typeof(Entities),
-        //        new Dictionary<string, string>
-        //        {
-        //            {"UserMentions", "user_mentions"}
-        //        }
-        //    }
 
-        //};
     }
 }

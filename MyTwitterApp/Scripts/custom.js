@@ -10,15 +10,16 @@
                 .then(function (obj) {
                     var data = obj.data;
                     $scope.tweets = [];
-                    data.Result.forEach(function (data, index) {
+                    //data.Result.forEach(function (data, index) {
+                    data.result.forEach(function (data, index) {
 
                         var transformedobj = $scope.transformData(data);
                         $scope.tweets.push(transformedobj);
                     });
                     $timeout($scope.transformTweetUserMentionedText, 100);
                     //console.log("Init called");
-                    console.log("Tweet count", $scope.tweets.length);
-                    console.log("Tweets", $scope.tweets);
+                    //console.log("Tweet count", $scope.tweets.length);
+                    //console.log("Tweets", $scope.tweets);
 
                 });
             //.error(function(data, status, headers, config) {
@@ -28,7 +29,7 @@
         }
 
         $scope.initData();
-        //$interval($scope.initData, 60 * 1000);
+        $interval($scope.initData, 60 * 1000);
         $scope.transformTweetUserMentionedText = function () {
             $scope.textTransformed = true;
             var subobj;
@@ -86,10 +87,12 @@
                     });
                     for (i = 0; i < hashtags_indices.length; i++) {
                         var hashtag = text.slice(hashtags_indices[i][0], hashtags_indices[i][1]);
-                        var str1 = '<a href="https://twitter.com/hashtag/' + hashtag.slice(1) + '"target="_blank">' + hashtag + '</a>'; //retrieve the user_mentioned string part
+                        if (hashtag.trimLeft() != hashtag)
+                            hashtag = text.slice(hashtags_indices[i][0] + 1, hashtags_indices[i][1] + 1);
+                        var formattedhashtag = '<a href="https://twitter.com/hashtag/' + hashtag.slice(1) + '"target="_blank">' + hashtag + '</a>'; //retrieve the user_mentioned string part
                         //$(el).html().replace(hashtag, str1);
                         var orightml = $(el).html();
-                        var newhtml = orightml.replace(hashtag, str1);
+                        var newhtml = orightml.replace(hashtag, formattedhashtag);
                         $(el).html(newhtml);
                     }
 
