@@ -65,18 +65,20 @@ namespace MyTwitterApp.Models
     public class Medium3
     {
 
-        
+
         [JsonProperty("media_url")]
         public string MediaUrl { get; set; }
 
-        
+
         public string Type { get; set; }
+
+
 
     }
 
     public class ExtendedEntities
     {
-        public List<Medium3> media { get; set; }
+        public List<Medium> media { get; set; }
     }
 
     public class User
