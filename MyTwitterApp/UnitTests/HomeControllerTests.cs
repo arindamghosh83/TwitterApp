@@ -25,14 +25,14 @@ namespace MyTwitterApp.UnitTests
             List<RootObject> expectedtweets = new List<RootObject> { new RootObject() { Text = "Mock Object to Test1" }, new RootObject() { Text = "Mock Object to Test2" } };
 
 
-            repo.Setup(x => x.GetTwitts()).ReturnsAsync(expectedtweets);
+            repo.Setup(x => x.GetTweets()).ReturnsAsync(expectedtweets);
         }
 
         [Test]
         public void then_get_tweets_should_return_expected_tweets()
         {
             var actualtweets =sut.GetTwitterFeed();
-            repo.Verify(x => x.GetTwitts(),Times.Once);
+            repo.Verify(x => x.GetTweets(),Times.Once);
            
 
         }

@@ -47,10 +47,10 @@ namespace MyTwitterApp.Repository
             var requestUserTimeline = new HttpRequestMessage(HttpMethod.Get, url);
             requestUserTimeline.Headers.Add("Authorization", "Bearer " + accessToken);
             HttpResponseMessage responseUserTimeLine = await _client.SendAsync(requestUserTimeline).ConfigureAwait(false);
-            List<RootObject> ourlisting = JsonConvert.DeserializeObject<List<RootObject>>(await responseUserTimeLine.Content.ReadAsStringAsync());
+            List<RootObject> tweets = JsonConvert.DeserializeObject<List<RootObject>>(await responseUserTimeLine.Content.ReadAsStringAsync());
             
 
-            return ourlisting;
+            return tweets;
         }
 
 

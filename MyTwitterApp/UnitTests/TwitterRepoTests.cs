@@ -45,7 +45,7 @@ namespace MyTwitterApp.UnitTests
             fakeHttpHandler.Setup(x => x.GetAccessTokenAsync(It.IsAny<string>())).ReturnsAsync(expectedToken);
 
 
-            var actualtweets = sut.GetTwitts().Result;
+            var actualtweets = sut.GetTweets().Result;
             fakeHttpHandler.Verify(x => x.GetAccessTokenAsync("https://api.twitter.com/oauth2/token"), Times.Once);
             Assert.That(actualtweets.Count, Is.EqualTo(expectedtweets.Count));
             Assert.That(actualtweets[0].Text, Is.EqualTo(expectedtweets[0].Text));

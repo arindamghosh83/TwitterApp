@@ -23,7 +23,7 @@ namespace MyTwitterApp.Repository
         public string OAuthConsumerSecret { get; set; }
         public string OAuthConsumerKey { get; set; }
 
-        public async Task<List<RootObject>> GetTwitts()
+        public async Task<List<RootObject>> GetTweets()
         {
            
              var accessToken =  this.GetAccessToken().Result;

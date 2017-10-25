@@ -10,6 +10,6 @@ namespace MyTwitterApp.Repository
     public interface ITwitterRepo
     {
         Task<string> GetAccessToken();
-        Task<List<RootObject>> GetTwitts();
+        Task<List<RootObject>> GetTweets();
     }
 }

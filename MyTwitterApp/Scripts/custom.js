@@ -159,23 +159,23 @@
             obj.urls = [];
 
             obj.medium = [];
-            if (tweet.extended_entities) {
-                if (tweet.extended_entities.media.length > 0) {
-                    obj.media = {}; //Create media sub object
-                    obj.media.media_url = tweet.extended_entities.media[0].media_url;
-                    obj.media.type = tweet.extended_entities.media[0].type;
-                    obj.media.embedded_url = tweet.entities.media[0].url;
-                    tweet.extended_entities.media.forEach(function (media) {
-                            obj.medium.push(media);
-                        });
+            //if (tweet.extended_entities) {
+            //    if (tweet.extended_entities.media.length > 0) {
+            //        obj.media = {}; //Create media sub object
+            //        obj.media.media_url = tweet.extended_entities.media[0].media_url;
+            //        obj.media.type = tweet.extended_entities.media[0].type;
+            //        obj.media.embedded_url = tweet.extended_entities.media[0].url;
+            //        tweet.extended_entities.media.forEach(function (media) {
+            //                obj.medium.push(media);
+            //            });
 
-                }
-            //} else {
-            //    if (tweet.user) {
-            //        obj.description = tweet.user.description;
             //    }
+            ////} else {
+            ////    if (tweet.user) {
+            ////        obj.description = tweet.user.description;
+            ////    }
 
-            }
+            //}
 
             if (tweet.entities) {
 
@@ -195,15 +195,15 @@
                     });
                 }
 
-                //if (tweet.entities.media && tweet.entities.media.length > 0) {
-                //    obj.media = {};
-                //    obj.media.media_url = tweet.entities.media[0].media_url;
-                //    obj.media.type = tweet.entities.media[0].type;
-                //    obj.media.embedded_url = tweet.entities.media[0].url;
-                //    tweet.entities.media.forEach(function (media) {
-                //        obj.medium.push(media);
-                //    });
-                //}
+                if (tweet.entities.media && tweet.entities.media.length > 0) {
+                    obj.media = {};
+                    obj.media.media_url = tweet.entities.media[0].media_url;
+                    obj.media.type = tweet.entities.media[0].type;
+                    obj.media.embedded_url = tweet.entities.media[0].url;
+                    tweet.entities.media.forEach(function (media) {
+                        obj.medium.push(media);
+                    });
+                }
                 if (tweet.user) {
                     obj.description = tweet.user.description;
                 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MyTwitterApp.Extensions;
 using MyTwitterApp.Models;
 using MyTwitterApp.Repository;
 using Newtonsoft.Json;
@@ -46,11 +47,12 @@ namespace MyTwitterApp.Controllers
 
             };
             
-            var access_token = _repo.GetTwitts();
-            
-            var twitterfeed =JsonConvert.SerializeObject(access_token,settings);
-            
+            var tweets = _repo.GetTweets();
+
+            var twitterfeed =JsonConvert.SerializeObject(tweets,settings);
+
             return Content(twitterfeed, "application/json");
+            //return new JsonNetResult() { Data = tweets };
 
 
         }
