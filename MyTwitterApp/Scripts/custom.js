@@ -10,7 +10,6 @@
                 .then(function (obj) {
                     var data = obj.data;
                     $scope.tweets = [];
-                    //data.Result.forEach(function (data, index) {
                     data.result.forEach(function (data, index) {
 
                         var transformedobj = $scope.transformData(data);
@@ -22,9 +21,7 @@
                     //console.log("Tweets", $scope.tweets);
 
                 });
-            //.error(function(data, status, headers, config) {
-
-            //});
+           
 
         }
 
@@ -51,7 +48,7 @@
                     var startidx;
                     var endidx;
                     for (i = 0; i < user_mentioned_indices.length; i++) {
-                        //var user_mention_idx = indice
+                        
 
                         if (i == 0) {
                             startidx = 0;
@@ -90,7 +87,6 @@
                         if (hashtag.trimLeft() != hashtag)
                             hashtag = text.slice(hashtags_indices[i][0] + 1, hashtags_indices[i][1] + 1);
                         var formattedhashtag = '<a href="https://twitter.com/hashtag/' + hashtag.slice(1) + '"target="_blank">' + hashtag + '</a>'; //retrieve the user_mentioned string part
-                        //$(el).html().replace(hashtag, str1);
                         var orightml = $(el).html();
                         var newhtml = orightml.replace(hashtag, formattedhashtag);
                         $(el).html(newhtml);
@@ -109,7 +105,6 @@
                         if (displayurl.trimLeft() != displayurl)
                             displayurl = text.slice(url_indices[i][0] + 1, url_indices[i][1] + 1);
                         formattedurl = '<a href="' + displayurl + '"target="_blank">' + displayurl + '</a>'; //retrieve the url string part from text
-                        //$(el).html().replace(hashtag, str1);
                         orightml1 = $(el).html();
                         newhtml1 = orightml1.replace(displayurl, formattedurl);
                         $(el).html(newhtml1);
@@ -130,7 +125,6 @@
                         if (mediaurl.trimRight() != mediaurl)
                             mediaurl = text.slice(media_url_indices[i][0] - 1, media_url_indices[i][1] - 1);
                         var formattedmediaurl = '<a href="' + mediaurl + '"target="_blank">' + mediaurl + '</a>'; //retrieve the user_mentioned string part
-                        //$(el).html().replace(hashtag, str1);
                         var orightml3 = $(el).html();
                         var newhtml3 = orightml3.replace(mediaurl, formattedmediaurl);
                         $(el).html(newhtml3);
@@ -159,26 +153,29 @@
             obj.isVisible = true;
             //obj.media = {};
             obj.user = tweet.user;
-            //obj.text = tweet.text.replace(urlRegex, '');
             obj.text = tweet.text;
             obj.user_mentions = [];
             obj.hashtags = [];
             obj.urls = [];
 
             obj.medium = [];
-            //if (tweet.extended_entities) {
-            //    if (tweet.extended_entities.media.length > 0) {
-            //        obj.media = {}; //Create media sub object
-            //        obj.media.media_url = tweet.extended_entities.media[0].media_url;
-            //        obj.media.type = tweet.extended_entities.media[0].type;
+            if (tweet.extended_entities) {
+                if (tweet.extended_entities.media.length > 0) {
+                    obj.media = {}; //Create media sub object
+                    obj.media.media_url = tweet.extended_entities.media[0].media_url;
+                    obj.media.type = tweet.extended_entities.media[0].type;
+                    obj.media.embedded_url = tweet.entities.media[0].url;
+                    tweet.extended_entities.media.forEach(function (media) {
+                            obj.medium.push(media);
+                        });
 
-            //    }
+                }
             //} else {
             //    if (tweet.user) {
             //        obj.description = tweet.user.description;
             //    }
 
-            //}
+            }
 
             if (tweet.entities) {
 
@@ -198,15 +195,15 @@
                     });
                 }
 
-                if (tweet.entities.media && tweet.entities.media.length > 0) {
-                    obj.media = {};
-                    obj.media.media_url = tweet.entities.media[0].media_url;
-                    obj.media.type = tweet.entities.media[0].type;
-                    obj.media.embedded_url = tweet.entities.media[0].url;
-                    tweet.entities.media.forEach(function (media) {
-                        obj.medium.push(media);
-                    });
-                }
+                //if (tweet.entities.media && tweet.entities.media.length > 0) {
+                //    obj.media = {};
+                //    obj.media.media_url = tweet.entities.media[0].media_url;
+                //    obj.media.type = tweet.entities.media[0].type;
+                //    obj.media.embedded_url = tweet.entities.media[0].url;
+                //    tweet.entities.media.forEach(function (media) {
+                //        obj.medium.push(media);
+                //    });
+                //}
                 if (tweet.user) {
                     obj.description = tweet.user.description;
                 }
@@ -218,7 +215,7 @@
         $scope.textSearch = function () {
             var searchText = $scope.searchText;
             $scope.tweets.forEach(function (tweet, index) {
-                if (tweet.text.includes(searchText)) {
+                if (tweet.text.includes(searchText) || tweet.description.includes(searchText)) {
                     tweet.isVisible = true;
                 } else {
                     tweet.isVisible = false;
@@ -238,12 +235,8 @@
     var TwitterFactory = function ($http) {
         var factory = {};
         factory.getTwitterFeed = function () {
-            //var deferred = $q.defer();
             return $http.get("/Home/GetTwitterFeed");
-            //$http.get("/Home/GetTwitterFeed").success(function(data) {
-            //    deferred.resolve(data);
-            //});
-            //return deferred.promise;
+           
         }
 
 
